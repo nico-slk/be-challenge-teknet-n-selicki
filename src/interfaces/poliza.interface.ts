@@ -1,0 +1,27 @@
+export type PolicyType = 'Property' | 'Auto' | 'Life' | 'Health' | 'Liability' | 'Marine' | 'Cyber' | 'D&O';
+export type PolicyStatus = 'active' | 'expired' | 'cancelled';
+export type Region = 'LATAM' | 'NA' | 'EMEA' | 'APAC';
+export type Currency = 'USD' | 'EUR' | 'GBP' | 'ARS' | 'BRL' | 'JPY';
+export type RiskRating = 'low' | 'medium' | 'high' | 'critical';
+
+// 2. Interfaz con todos los atributos del modelo
+export interface Poliza {
+  id: number;
+  policy_number: string;
+  customer: string;
+  policy_type: PolicyType;
+  start_date: string;
+  end_date: string;
+  premium_usd: number;
+  status: PolicyStatus;
+  insured_value_usd: number;
+  region: Region;
+  currency: Currency;
+  broker: string;
+  risk_rating: RiskRating;
+  claims_count: number;
+  deductible_usd: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+}

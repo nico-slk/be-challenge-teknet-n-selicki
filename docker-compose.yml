@@ -1,0 +1,30 @@
+services:
+  teknet_db:
+    image: postgres:15-alpine
+    container_name: teknet_postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=teknet_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: teknet_app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=teknet_db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=teknet_db
+    depends_on:
+      - teknet_db
+
+volumes:
+  postgres_data:
