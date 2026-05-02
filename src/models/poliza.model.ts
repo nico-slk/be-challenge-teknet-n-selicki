@@ -9,6 +9,7 @@ const Poliza = db.define(
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
+      unique: true
     },
     policy_number: {
       type: DataTypes.STRING(255),
@@ -76,12 +77,20 @@ const Poliza = db.define(
     deductible_usd: {
       type: DataTypes.DECIMAL(10, 3),
       allowNull: false,
+    },
+    operation_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+      unique: false
     }
   },
   {
     tableName: "polizas",
     timestamps: true,
     paranoid: true,
+    createdAt: "created_at",
   }
 );
 

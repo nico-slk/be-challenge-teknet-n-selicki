@@ -19,15 +19,14 @@ const parseCsv = (req: Request, res: Response, next: NextFunction): void => {
   }
 
   let rowIndex = 1; // Para llevar el conteo de filas (empezando en 1 por el encabezado)
+  let operation_id = uuidv4();
   const validRows: any[] = [];
   const errorLog: any[] = [];
-  const startTime = Date.now();
   const policyNumbersSeen = new Set<string>();
 
   try {
     parseString(csvBuffer, { headers: true })
       .on("data", (row: Poliza) => {
-        rowIndex++;
         const rowErrors: {
           message: string;
           code: string;
@@ -35,6 +34,7 @@ const parseCsv = (req: Request, res: Response, next: NextFunction): void => {
           row: number;
           severity?: "error" | "warning";
         }[] = [];
+        rowIndex++;
 
         if (!row.policy_number) {
           rowErrors.push({ row: rowIndex, message: "Falta el número de póliza", code: "MISSING_POLICY_NUMBER" });
@@ -82,12 +82,12 @@ const parseCsv = (req: Request, res: Response, next: NextFunction): void => {
         if (rowErrors.length > 0) {
           errorLog.push({ policy: row.policy_number || "N/A", errors: rowErrors.filter(e => e.severity !== "warning"), warnings: rowErrors.filter(e => e.severity === "warning") });
         } else {
-          validRows.push(row);
+          validRows.push({ ...row, operation_id });
         }
       })
       .on("end", () => {
         const metrics = {
-          operation_id: uuidv4(),
+          operation_id,
           correlation_id: uuidv4(),
           inserted_count: validRows.length,
           rejected_count: errorLog.filter(e => e.errors.length > 0).length,

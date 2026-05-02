@@ -37,9 +37,8 @@ export interface Poliza {
   risk_rating: RiskRating;
   claims_count: number;
   deductible_usd: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  created_at?: Date;
+  operation_id: string;
 }
 
-export interface PolizaCreationAttributes extends Optional<Poliza, "id" | "createdAt" | "updatedAt" | "deletedAt"> { }
+export interface PolizaCreationAttributes extends Optional<Poliza, "id" | "created_at" | "operation_id"> { }
