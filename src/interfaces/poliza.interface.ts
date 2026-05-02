@@ -5,6 +5,21 @@ export type PolicyStatus = 'active' | 'expired' | 'cancelled';
 export type Region = 'LATAM' | 'NA' | 'EMEA' | 'APAC';
 export type Currency = 'USD' | 'EUR' | 'GBP' | 'ARS' | 'BRL' | 'JPY';
 export type RiskRating = 'low' | 'medium' | 'high' | 'critical';
+export type FieldType = "id"
+  | "policy_number"
+  | "customer"
+  | "policy_type"
+  | "start_date"
+  | "end_date"
+  | "premium_usd"
+  | "status"
+  | "insured_value_usd"
+  | "region"
+  | "currency"
+  | "broker"
+  | "risk_rating"
+  | "claims_count"
+  | "deductible_usd";
 
 export interface Poliza {
   id: number;

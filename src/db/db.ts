@@ -10,6 +10,7 @@ const db = new Sequelize(
     host: configKeys.DB_HOST,
     port: parseInt(configKeys.DB_PORT as string, 10),
     dialect: "postgres",
+    logging: false, // Desactiva el logging de Sequelize para evitar mensajes innecesarios
   }
 );
 

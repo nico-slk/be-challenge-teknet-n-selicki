@@ -4,11 +4,10 @@ import { NextFunction, Request, Response } from "express";
  * Middleware para validar archivos subidos. 
  * Verifica que el archivo exista y tenga un tipo MIME permitido (CSV o Excel).
  * 
- * @author Nicolás Selicki <Me tomé la molestia de agregar que tambien acepte archivos de Excel>
  */
 const validFile = (req: Request, res: Response, next: NextFunction): void => {
   const file = req.file;
-  const allowedMimeTypes = ["text/csv", "application/vnd.ms-excel"];
+  const allowedMimeTypes = ["text/csv"];
 
   try {
     if (!file) {

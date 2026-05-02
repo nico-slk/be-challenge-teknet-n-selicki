@@ -4,6 +4,12 @@ import db from "../db/db";
 const Poliza = db.define(
   "Poliza",
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     policy_number: {
       type: DataTypes.STRING(255),
       allowNull: false,
