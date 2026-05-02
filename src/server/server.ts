@@ -14,6 +14,7 @@ export class Server {
     this.app = express();
     this.port = configKeys.PORT as number;
     this.routes();
+    this.connectDB();
     this.ServerNode = createServer(this.app);
   }
 
@@ -21,6 +22,7 @@ export class Server {
     try {
       await db.authenticate();
       await db
+        // .sync()
         .sync({ alter: true })
         .then(() => console.log("✅ Database synchronized"));
     } catch (error) {
@@ -47,8 +49,8 @@ export class Server {
   routes() {
     ApiPaths.forEach(({ url, router }) => {
       try {
-        this.app.use(`/api${url}`, router);
-        console.log(`✅ Routes load: /api${url}`);
+        this.app.use(`${url}`, router);
+        console.log(`✅ Routes load: ${url}`);
       } catch (error) {
         console.error(`❌ Routes load error ${url}:`, error);
       }

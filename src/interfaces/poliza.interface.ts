@@ -1,10 +1,11 @@
+import { Optional } from "sequelize";
+
 export type PolicyType = 'Property' | 'Auto' | 'Life' | 'Health' | 'Liability' | 'Marine' | 'Cyber' | 'D&O';
 export type PolicyStatus = 'active' | 'expired' | 'cancelled';
 export type Region = 'LATAM' | 'NA' | 'EMEA' | 'APAC';
 export type Currency = 'USD' | 'EUR' | 'GBP' | 'ARS' | 'BRL' | 'JPY';
 export type RiskRating = 'low' | 'medium' | 'high' | 'critical';
 
-// 2. Interfaz con todos los atributos del modelo
 export interface Poliza {
   id: number;
   policy_number: string;
@@ -25,3 +26,5 @@ export interface Poliza {
   updatedAt?: Date;
   deletedAt?: Date;
 }
+
+export interface PolizaCreationAttributes extends Optional<Poliza, "id" | "createdAt" | "updatedAt" | "deletedAt"> { }

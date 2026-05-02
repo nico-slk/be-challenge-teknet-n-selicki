@@ -9,7 +9,7 @@ interface IApiPaths {
 
 export const ApiPaths: IApiPaths[] = [
   {
-    url: "/poliza",
+    url: "/",
     router: PolizaRoute,
   }
 ];

@@ -1,14 +1,14 @@
 import { Router } from "express";
-
-import { FileHandler } from "../handlers";
+import { FileHandler, ParseCsv } from "../handlers";
+import { PolizaController } from "../controllers";
 import { upload } from "../handlers/mutler";
 
 const router = Router();
+
 const { validFile } = FileHandler;
+const { parseCsv } = ParseCsv;
+const { uploadFile } = PolizaController;
 
-router.post("/upload", upload.single("file"), validFile, (req, res) => {
-
-  res.send("Archivo subido exitosamente");
-});
+router.post("/upload", upload.single("file"), validFile, parseCsv, uploadFile);
 
 export default router;
