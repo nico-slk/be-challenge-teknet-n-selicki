@@ -17,8 +17,6 @@ export class PolizaController {
     res.setHeader('x-correlation-id', correlationId);
 
     try {
-      await this.polizaService.postPoliza(parsedData);
-
       await this.operationService.createOperation({
         id: csvResults.metrics.operation_id,
         endpoint: "/upload",

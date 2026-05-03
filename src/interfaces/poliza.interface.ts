@@ -42,3 +42,12 @@ export interface Poliza {
 }
 
 export interface PolizaCreationAttributes extends Optional<Poliza, "id" | "created_at" | "operation_id"> { }
+
+export interface Error {
+  row: number;
+  code: string;
+  message: string;
+  field?: string;
+  severity: "warning" | "error";
+}
+

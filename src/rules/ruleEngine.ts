@@ -16,7 +16,7 @@ export class RuleEngine {
     this.rules.set("Liability", [new LiabilityMinInsuredValueRule()]);
     this.rules.set("Marine", [new MarineMinInsuredValueRule()]);
     this.rules.set("Cyber", [new CyberMinInsuredValueRule()]);
-    this.rules.set("DNO", [new DnOMinInsuredValueRule()]);
+    this.rules.set("D&O", [new DnOMinInsuredValueRule()]);
 
     this.globalRules.push(new PremiumRiskMismatchRule());
     this.globalRules.push(new HighClaimsActiveRule());

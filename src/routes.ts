@@ -7,13 +7,10 @@ interface IApiPaths {
   router: Router;
 }
 
+// Debería crear otro path para las opreaciones /policies
 export const ApiPaths: IApiPaths[] = [
   {
     url: "/",
-    router: PolizaRoute,
-  },
-  {
-    url: "/policies/summary",
     router: PolizaRoute,
   }
 ];

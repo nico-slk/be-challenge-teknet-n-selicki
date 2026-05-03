@@ -23,8 +23,8 @@ export class Server {
     try {
       await db.authenticate();
       await db
-        .sync()
-        // .sync({ force: true })
+        // .sync()
+        .sync({ force: true })
         .then(() => console.log("✅ Database synchronized"));
     } catch (error) {
       console.error("Database connection error:", error);
@@ -42,8 +42,8 @@ export class Server {
       })
     );
 
-    this.app.use(express.json({ limit: "5mb" }));
-    this.app.use(express.urlencoded({ limit: "10mb", extended: true }));
+    // this.app.use(express.json({ limit: "5mb" }));
+    // this.app.use(express.urlencoded({ limit: "10mb", extended: true }));
   }
 
   // Routes can be added here
