@@ -11,5 +11,9 @@ export const ApiPaths: IApiPaths[] = [
   {
     url: "/",
     router: PolizaRoute,
+  },
+  {
+    url: "/policies/summary",
+    router: PolizaRoute,
   }
 ];

@@ -13,6 +13,7 @@ export class Server {
   constructor() {
     this.app = express();
     this.port = configKeys.PORT as number;
+    this.middleware();
     this.routes();
     this.connectDB();
     this.ServerNode = createServer(this.app);

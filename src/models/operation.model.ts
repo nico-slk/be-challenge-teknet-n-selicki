@@ -2,7 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import db from "../db/db";
 
 export class OperationModel extends Model {
-  public id!: string; // operation_id
+  public id!: string;
   public endpoint!: string;
   public status!: 'RECEIVED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
   public correlation_id!: string;
