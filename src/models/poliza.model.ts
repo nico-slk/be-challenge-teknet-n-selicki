@@ -112,3 +112,4 @@ PolizaModel.init(
 );
 
 export default PolizaModel;
+// type: DataTypes.ENUM('Property', 'Auto', 'Life', 'Health', 'Liability', 'Marine', 'Cyber', 'D&O'),

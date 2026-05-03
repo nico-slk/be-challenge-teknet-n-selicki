@@ -23,8 +23,8 @@ export class Server {
     try {
       await db.authenticate();
       await db
-        // .sync()
-        .sync({ force: true })
+        .sync()
+        // .sync({ force: true })
         .then(() => console.log("✅ Database synchronized"));
     } catch (error) {
       console.error("Database connection error:", error);
