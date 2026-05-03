@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { PolizaRoute } from "./router";
+import { PolizaRoute } from "./router/poliza.route";
 
 
 interface IApiPaths {

@@ -1,16 +1,46 @@
 import { Router } from "express";
-import { FileHandler, ParseCsv } from "../handlers";
-import { PolizaController } from "../controllers";
 import { upload } from "../handlers/mutler";
+import { PolizaController } from "../controllers/poliza.controller";
+import { FileHandler } from "../handlers/request.error";
+import { ParseCsvHandler } from "../handlers/parseCsvHandler";
 
-const router = Router();
+class PolizaRouter {
+  public router: Router;
 
-const { validFile } = FileHandler;
-const { parseCsv } = ParseCsv;
-const { uploadFile, getPolicies, getSummary } = PolizaController;
+  constructor(
+    private polizaController: PolizaController,
+    private fileHandler: FileHandler,
+    private parseCsvHandler: ParseCsvHandler
+  ) {
+    this.router = Router();
+    this.initializeRoutes();
+  }
 
-router.get("/", getPolicies);
-router.get("/summary", getSummary);
-router.post("/upload", upload.single("file"), validFile, parseCsv, uploadFile);
+  private initializeRoutes(): void {
+    this.router.get("/", (req, res) =>
+      this.polizaController.getPolicies(req, res)
+    );
 
-export default router;
+    this.router.get("/summary", (req, res) =>
+      this.polizaController.getSummary(req, res)
+    );
+
+    // En JS, al pasar métodos de clase como callbacks (ej. this.fileHandler.validFile), se puede perder el contexto de this. 
+    // Por eso usamos arrow functions en la definición de las rutas: (req, res, next) => this.fileHandler.validFile(req, res, next).
+    this.router.post(
+      "/upload",
+      upload.single("file"),
+      (req, res, next) => this.fileHandler.validFile(req, res, next),
+      (req, res, next) => this.parseCsvHandler.parseCsv(req, res, next),
+      (req, res) => this.polizaController.uploadFile(req, res)
+    );
+  }
+}
+
+const polizaRouter = new PolizaRouter(
+  new PolizaController(),
+  new FileHandler(),
+  new ParseCsvHandler()
+);
+
+export const PolizaRoute = polizaRouter.router;

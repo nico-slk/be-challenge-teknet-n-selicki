@@ -1,15 +1,42 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import db from "../db/db";
+import {
+  Poliza as IPoliza,
+  PolizaCreationAttributes,
+  PolicyType,
+  PolicyStatus,
+  Region,
+  Currency,
+  RiskRating
+} from "../interfaces/poliza.interface";
 
-const Poliza = db.define(
-  "Poliza",
+export class PolizaModel extends Model<IPoliza, PolizaCreationAttributes> implements IPoliza {
+  public id!: number;
+  public policy_number!: string;
+  public customer!: string;
+  public policy_type!: PolicyType;
+  public start_date!: string;
+  public end_date!: string;
+  public premium_usd!: number;
+  public status!: PolicyStatus;
+  public insured_value_usd!: number;
+  public region!: Region;
+  public currency!: Currency;
+  public broker!: string;
+  public risk_rating!: RiskRating;
+  public claims_count!: number;
+  public deductible_usd!: number;
+  public operation_id!: string;
+
+  public readonly created_at!: Date;
+}
+
+PolizaModel.init(
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
-      unique: true
     },
     policy_number: {
       type: DataTypes.STRING(255),
@@ -21,16 +48,7 @@ const Poliza = db.define(
       allowNull: false,
     },
     policy_type: {
-      type: DataTypes.ENUM(
-        'Property',
-        'Auto',
-        'Life',
-        'Health',
-        'Liability',
-        'Marine',
-        'Cyber',
-        'D&O'
-      ),
+      type: DataTypes.ENUM('Property', 'Auto', 'Life', 'Health', 'Liability', 'Marine', 'Cyber', 'D&O'),
       allowNull: false,
     },
     start_date: {
@@ -82,16 +100,15 @@ const Poliza = db.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true,
-      unique: false
     }
   },
   {
+    sequelize: db,
     tableName: "polizas",
     timestamps: true,
     paranoid: true,
-    createdAt: "created_at",
+    createdAt: "created_at"
   }
 );
 
-export default Poliza;
+export default PolizaModel;
