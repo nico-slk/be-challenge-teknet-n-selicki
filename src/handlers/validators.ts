@@ -23,10 +23,34 @@ export const validators = {
 
   hasInvalidChars: (text: string) => !/^[a-zA-ZÀ-ÿ\s'.]+$/.test(text),
 
-  isTrash: (value: any) =>
-    value === null || value === undefined || POLICY_CONFIG.blacklistedNulls.includes(String(value).trim()),
+  isTrash: (value: any) => value === null || value === undefined || POLICY_CONFIG.blacklistedNulls.includes(String(value).trim()),
 
   isScientific: (value: any) => /e/i.test(String(value)) && !isNaN(Number(value)),
+
+  /**
+   * Retorna false si el string contiene emojis o caracteres fuera del rango 
+   * estándar de texto (incluyendo caracteres Unicode especiales).
+   */
+  hasEmojisOrUnicode: (text: string): boolean => {
+    // Busca cualquier caracter que no sea ASCII imprimible, letras latinas extendidas, 
+    // espacios o puntuación básica.
+    const unicodeEmojiRegex = /[^\x00-\x7F\u00C0-\u00FF\s'.,\-]/;
+    return unicodeEmojiRegex.test(text);
+  },
+
+  /**
+   * Retorna false si el campo contiene comas y comillas al mismo tiempo.
+   * Esto suele indicar un error de escape en archivos CSV (campos mal cerrados).
+   */
+  hasInternalQuotesAndCommas: (val: string): boolean => {
+    const stringVal = String(val);
+    return stringVal.includes(',') || (stringVal.includes('"') || stringVal.includes("'"));
+  },
+
+  isOnlyPunctuation: (val: string): boolean => {
+    const trimmed = val.trim();
+    return trimmed === "-" || trimmed === "—" || trimmed === ".";
+  },
 
   /**
    * Valida que un número no exceda los límites definidos para enteros o decimales, y que no sea infinito. Retorna false si el valor es inválido o excede los límites, true si es válido.

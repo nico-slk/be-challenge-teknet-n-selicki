@@ -17,11 +17,11 @@ class PolizaRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.get("/", (req, res) =>
+    this.router.get("/policies", (req, res) =>
       this.polizaController.getPolicies(req, res)
     );
 
-    this.router.get("/summary", (req, res) =>
+    this.router.get("/policies/summary", (req, res) =>
       this.polizaController.getSummary(req, res)
     );
 

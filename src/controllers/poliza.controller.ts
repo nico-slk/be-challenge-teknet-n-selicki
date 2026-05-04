@@ -17,8 +17,6 @@ export class PolizaController {
     res.setHeader('x-correlation-id', correlationId);
 
     try {
-      await this.polizaService.postPoliza(parsedData);
-
       await this.operationService.createOperation({
         id: csvResults.metrics.operation_id,
         endpoint: "/upload",
@@ -66,7 +64,7 @@ export class PolizaController {
         start_date_from,
         start_date_to,
         sort_by = "created_at",
-        sort_order = "DESC"
+        order = "DESC"
       } = req.query;
 
       const result = await this.polizaService.getPolicies({
@@ -86,7 +84,7 @@ export class PolizaController {
         },
         sort: {
           by: sort_by as string,
-          order: sort_order as string
+          order: order as string
         }
       });
 

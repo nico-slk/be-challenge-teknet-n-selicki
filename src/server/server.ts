@@ -42,8 +42,8 @@ export class Server {
       })
     );
 
-    this.app.use(express.json({ limit: "5mb" }));
-    this.app.use(express.urlencoded({ limit: "10mb", extended: true }));
+    // this.app.use(express.json({ limit: "5mb" }));
+    // this.app.use(express.urlencoded({ limit: "10mb", extended: true }));
   }
 
   // Routes can be added here

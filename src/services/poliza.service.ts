@@ -8,20 +8,18 @@ export class PolizaService {
     if (data.length === 0) return { inserted: 0 };
 
     try {
-      return await db.transaction(async (t) => {
-        const created = await PolizaModel.bulkCreate(data as PolizaCreationAttributes[], {
-          validate: true,
-          transaction: t,
-        });
-
-        return {
-          inserted: created.length,
-          timestamp: new Date(),
-        };
+      const created = await PolizaModel.bulkCreate(data as PolizaCreationAttributes[], {
+        ignoreDuplicates: true,
+        validate: true,
       });
+
+      return {
+        inserted: created.length,
+        timestamp: new Date(),
+      };
     } catch (error) {
       console.error("Error al insertar pólizas:", error);
-      throw new Error("Error al insertar pólizas");
+      throw new Error("Error crítico en la base de datos");
     }
   }
 
